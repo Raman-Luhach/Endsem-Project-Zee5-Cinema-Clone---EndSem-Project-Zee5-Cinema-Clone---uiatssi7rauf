@@ -1,11 +1,8 @@
 import NavBar from "./components/navBar";
 import LoginPage from "./components/signIn";
 import SignUp from "./components/signUp";
-import ShowData from "./components/pages/Body";
-import Body from "./components/pages/Body";
+
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import {useContext} from "react";
-import {ApiContext} from "./components/context/ApiContext";
 import {PrimeReactProvider} from "primereact/api";
 import CarouselSpace from "./components/CarouselSpace";
 import Video from "./components/Video";
@@ -38,7 +35,6 @@ function App() {
             }
         ]
     );
-      const Apicontext = useContext(ApiContext);
       return (
         <div className="App bg-black">
             <PrimeReactProvider>

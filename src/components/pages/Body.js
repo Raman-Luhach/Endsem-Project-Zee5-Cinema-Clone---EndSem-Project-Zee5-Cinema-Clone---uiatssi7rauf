@@ -1,9 +1,8 @@
 import {useState , useEffect} from "react";
-import {Carousel}  from "primereact/carousel";
 
 export default function Body(){
     const [data, setData] = useState(null);
-    const [error, setError] = useState(null);
+    const [ setError] = useState(null);
 
     useEffect(() => {
         fetch('https://academics.newtonschool.co/api/v1/ott/show', {

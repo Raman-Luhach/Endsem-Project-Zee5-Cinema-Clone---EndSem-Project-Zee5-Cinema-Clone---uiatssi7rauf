@@ -3,7 +3,7 @@ import {ApiContext} from "./context/ApiContext";
 import {Link, useNavigate} from "react-router-dom";
 
 const SignUp = () => {
-    const {isSignedIn , setIsSignedIn} = useContext(ApiContext);
+    const {setIsSignedIn} = useContext(ApiContext);
     const toLogin = useNavigate()
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
