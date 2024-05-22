@@ -6,6 +6,7 @@ function Video() {
 
     useEffect(() => {
         // You can use videoUrl here to load the video
+
         console.log("Video URL:", videoUrl);
     }, [videoUrl]);
 

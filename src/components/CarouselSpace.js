@@ -7,7 +7,6 @@ import 'primereact/resources/primereact.min.css';
 
 function CardDashboard({ _id, thumbnail, keywords, title }) {
     const [isHovered, setIsHovered] = useState(false);
-    const [video, setVideo] = useState();
     const navigate = useNavigate();
 
     function handleVideo() {
@@ -18,14 +17,12 @@ function CardDashboard({ _id, thumbnail, keywords, title }) {
                 "projectID": "treoo5dhf86s",
                 "Authorization": `Bearer ${localStorage.getItem("token")}`
             }
-        }).then((res) => res.json())
+        })
+            .then((res) => res.json())
             .then((data) => {
                 console.log("API response data:", data); // Log the API response data
-                setVideo(data.video_url);
-                console.log(data.video_url)
-                navigate(`/video/${video}`);
-
-                 // Navigate after setting video state
+                const videoUrl = data.data.video_url;
+                navigate(`/video/${encodeURIComponent(videoUrl)}`); // Navigate directly using the video URL from the API response
             })
             .catch((error) => {
                 console.error("Error fetching video:", error);
