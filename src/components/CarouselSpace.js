@@ -35,32 +35,34 @@ function CardDashboard({ _id, thumbnail, keywords, title }) {
         <div
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className="relative transition-transform duration-300 transform hover:scale-105 overflow-hidden rounded-xl shadow-lg"
-            style={{ width: '250px', height: '350px' }}
+            className="relative mt-10 z-50 overflow-visible p-4 transition-all duration-300 transform hover:p-2 hover:bottom-8  rounded-xl shadow-lg"
+            // style={{ width: '250px', height: '350px' }}
         >
-            {!isHovered ? (
-                <img src={thumbnail} className="w-full h-full object-cover rounded-xl" alt="thumbnail" />
-            ) : (
-                <div className="absolute inset-0 bg-white flex flex-col justify-between p-4 rounded-xl shadow-inner">
-                    <div className="flex justify-center">
-                        <img src={thumbnail} className="w-48 h-48 object-cover rounded-xl" alt="thumbnail" />
+                <div className=" overflow-visible z-50 inset-0 bg-white flex flex-col justify-between rounded-xl shadow-inner">
+                    <div className={`flex justify-center ${isHovered && 'p-2'}`}>
+                        <img src={thumbnail} className="h-[350px] z-50 object-cover rounded-xl" alt="thumbnail" />
                     </div>
-                    <div className="flex flex-col items-center mt-4">
-                        <div className="font-semibold text-black">{title}</div>
-                        <div className="flex gap-2 text-black mt-2">
-                            {keywords.map((item, index) => (
-                                <div key={index} className="px-3 py-1 text-sm bg-gray-200 rounded-full">{item}</div>
-                            ))}
+                    { isHovered &&
+                    <>
+                        <div className="flex flex-col gap-2 p-2 pl-4">
+                            <div className="font-semibold text-black text-sm">{title}</div>
+                            <div className="flex gap-1 text-black text-sm">
+                                {keywords.map((item, index) => (
+                                    <div key={index} className="text-clip text-sm mr-2 rounded-full">{item}</div>
+                                ))}
+                            </div>
+                            <button
+                                className="text-sm  text-black bg-amber-50 w-20 p-1 border border-solid border-black rounded-full"
+                                onClick={handleVideo}
+                            >
+                                Watch
+                            </button>
                         </div>
-                    </div>
-                    <button
-                        className="text-black bg-amber-50 w-20 mt-4 border border-solid border-black py-2 rounded-full"
-                        onClick={handleVideo}
-                    >
-                        Watch
-                    </button>
+
+                    </>
+                    }
                 </div>
-            )}
+
         </div>
     );
 }

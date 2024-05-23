@@ -1,15 +1,33 @@
 import React, { useState } from 'react';
-import {useNavigate} from "react-router-dom";
-import {Link} from "react-router-dom";
+import { useNavigate, Link } from 'react-router-dom';
+
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const nav = useNavigate();
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
+
+    const validateEmail = (email) => {
+        return email.includes('@') && email.includes('.');
+    };
+
+    const validatePassword = (password) => {
+        return password.length >= 8;
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Prepare the payload for the API request
+        if (!validateEmail(email)) {
+            setError('Please enter a valid email address.');
+            return;
+        }
+
+        if (!validatePassword(password)) {
+            setError('Password must be at least 8 characters long.');
+            return;
+        }
+
         const payload = {
             email: email,
             password: password,
@@ -17,7 +35,6 @@ const LoginPage = () => {
         };
 
         try {
-            // Make the API request
             const response = await fetch('https://academics.newtonschool.co/api/v1/user/login', {
                 method: 'POST',
                 headers: {
@@ -28,38 +45,28 @@ const LoginPage = () => {
                 body: JSON.stringify(payload)
             });
 
-            // Parse the response
             const data = await response.json();
 
-            // Handle the response
-            console.log(data);
-
-            // Optionally, you can handle success and error cases
             if (response.ok) {
-                // Handle successful login
                 localStorage.setItem('token', data.token);
-                nav("/");
                 alert("User logged in successfully!");
-                // Redirect or perform other actions on successful login
+                navigate("/");
             } else {
-                // Handle login errors
-                nav('/signup')
-                alert("Login failed:", data);
-                // Display error message to the user
+                setError(data.message || 'Login failed. Please try again.');
             }
         } catch (error) {
-            // Handle any errors that occurred during the fetch
             console.error("Error occurred during login:", error);
-            // Display error message to the user
+            setError('An error occurred. Please try again.');
         }
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-black ">
-            <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-2xl p-8 w-3/12 mb-32 h-5/6">
+        <div className="flex items-center justify-center min-h-screen bg-black">
+            <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-2xl p-8 w-3/12 mb-32 h-full">
                 <h2 className="text-2xl font-bold mb-4 mt-4">Login to ZEE5</h2>
+                {error && <p className="text-red-500 text-xs italic mb-4">{error}</p>}
                 <div className="mb-4">
-                     <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
+                    <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
                         Email
                     </label>
                     <input
